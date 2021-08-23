@@ -18,7 +18,6 @@ import render_fast_los
 import render_map
 
 import graphics as gfx
-import traceback
 import cProfile
 import maputils
 import worldgen
@@ -372,15 +371,8 @@ if __name__ == '__main__':
 	
 	try:
 		loop()
-	except KeyboardInterrupt:
+	finally:
 		SETTINGS['running'] = False
-		traceback.print_exc()
-	except Exception as e:
-		traceback.print_exc()
-		SETTINGS['running'] = False
-		
+
 		if 'debug' in WORLD_INFO:
 			WORLD_INFO['debug'].quit()
-	
-	if 'debug' in WORLD_INFO:
-		WORLD_INFO['debug'].quit()
