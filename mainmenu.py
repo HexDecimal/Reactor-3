@@ -34,9 +34,17 @@ def draw_intro():
 	_shadow = 50
 	_burn = 8.0
 	_char_alpha = {c: random.uniform(.15, .7) for c in SUB_LINE}
-	
+
+	SETTINGS['running'] = 1  # Change to main menu after this function exits.
+
 	#Why did I base this on time.time()?
 	while time.time()-_stime<=5:
+		for event in tcod.event.get():
+			if isinstance(event, tcod.event.KeyDown):
+				return
+			if isinstance(event, tcod.event.MouseButtonDown):
+				return
+
 		_text = INTRO
 		
 		if time.time()-_stime<=1:
@@ -77,10 +85,9 @@ def draw_intro():
 				console_print(0, _i+(WINDOW_SIZE[0]//2)-len(SUB_LINE)//2, (WINDOW_SIZE[1]//2), c)
 				_char_alpha[c] = bad_numbers.clip(_char_alpha[c]*1.015, 0, 1)
 				_i += 1
-		
+
 		console_flush()
-	
-	SETTINGS['running'] = 1
+
 
 def clear(*args):
 	console_rect(0,0,0,WINDOW_SIZE[0],WINDOW_SIZE[1],True,flag=BKGND_DEFAULT)
